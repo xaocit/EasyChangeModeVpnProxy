@@ -5,6 +5,8 @@ from tkinter import ttk
 
 from validators.entry_validator import validate_max_symbols_input
 
+from .control_elements import checkbutton_event
+
 def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[int], is_resizable: tuple[bool]):
     """Функция создания окна"""
  
@@ -46,18 +48,14 @@ def build_window():
 
 
 
-
-
-
-
-
 class DrawElements:
+    """Класс, реализующий методы по отрисовке элементов на окне и дающий контроль над ними через переменные"""
 
     def __init__(self):
 
         label_using_proxy_server = self._show_label_using_proxy_server()
         self._is_active_checkbutton, self._checkbutton_on_or_off = self._show_checkbutton_on_or_off()
-        label_on_or_off = self._show_label_on_or_off()
+        self._label_on_or_off = self._show_label_on_or_off()
 
         label_ip_adress_proxy_server = self._show_label_ip_adress_proxy_server()
         self._entry_ip = self._show_entry_ip()
@@ -72,6 +70,9 @@ class DrawElements:
 
     def get_btn_save_all(self):
         return self._btn_save_all
+
+    def get_label_on_or_off(self):
+        return self._label_on_or_off
 
 
     def _show_label_using_proxy_server(self) -> ttk.Label:
@@ -92,6 +93,7 @@ class DrawElements:
         checkbutton_vpn_proxy = ttk.Checkbutton(variable=is_active, 
                                                 onvalue=1,
                                                 offvalue=0, 
+                                                command=lambda: checkbutton_event(is_active, self.get_label_on_or_off(), self.get_entry_ip()),
                                                 takefocus=0)
 
         checkbutton_vpn_proxy.grid(row=0, column=1, pady=10, sticky="we")
