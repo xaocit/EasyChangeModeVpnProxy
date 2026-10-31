@@ -42,58 +42,106 @@ def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[in
 def build_window():
     """Функция, где собираем всё, что будем отображать на экране"""
 
-    show_label_using_proxy_server()
-    show_radiobutton_on_or_off()
-    show_label_on_or_off()
-
-    show_label_ip_adress_proxy_server()
-    show_entry_ip()
+    draw_elements = DrawElements()
 
 
 
-def show_label_using_proxy_server():
-
-
-    label_using_proxy_server = ttk.Label(text="Использовать прокси-сервер: ", 
-                      font=("Times New Roman", 14))
-
-    label_using_proxy_server.grid(row=0, column=0, pady=10 ,sticky="we")
-
-
-def show_radiobutton_on_or_off():
-
-
-    radiobutton_vpn_proxy = ttk.Radiobutton()
-
-    radiobutton_vpn_proxy.grid(row=0, column=1, pady=10, sticky="we")
-
-
-def show_label_on_or_off():
-
-
-    label_on_or_off_proxy_server = ttk.Label(text="Откл.", 
-                    font=("Times New Roman", 14))
-
-    label_on_or_off_proxy_server.grid(row=0, column=2, pady=10, sticky="we")
 
 
 
-def show_label_ip_adress_proxy_server():
 
 
-    label_using_proxy_server = ttk.Label(text="IP-адрес прокси-сервера: ", 
-                      font=("Times New Roman", 14))
+class DrawElements:
 
-    label_using_proxy_server.grid(row=2, column=0, pady=10, sticky="we")
+    def __init__(self):
+
+        label_using_proxy_server = self._show_label_using_proxy_server()
+        self._is_active_checkbutton, self._checkbutton_on_or_off = self._show_checkbutton_on_or_off()
+        label_on_or_off = self._show_label_on_or_off()
+
+        label_ip_adress_proxy_server = self._show_label_ip_adress_proxy_server()
+        self._entry_ip = self._show_entry_ip()
+
+        self._btn_save_all = self._show_button_save_all()
+
+    def get_checkbutton(self):
+        return (self._is_active_checkbutton, self._checkbutton_on_or_off)
+
+    def get_entry_ip(self):
+        return self._entry_ip
+
+    def get_btn_save_all(self):
+        return self._btn_save_all
 
 
-def show_entry_ip():
+    def _show_label_using_proxy_server(self) -> ttk.Label:
 
 
-    entry_field_with_ip = ttk.Entry(width=20, 
-                                    font=("Times New Roman", 16))
+        label_using_proxy_server = ttk.Label(text="Использовать прокси-сервер: ", 
+                        font=("Times New Roman", 14))
 
-    validator = (entry_field_with_ip.register(validate_max_symbols_input), '%P')
-    entry_field_with_ip.config(validate='key', validatecommand=validator)
-    
-    entry_field_with_ip.grid(row=3, column=0, pady=10, sticky="we")
+        label_using_proxy_server.grid(row=0, column=0, pady=10 ,sticky="we")
+
+        return label_using_proxy_server
+
+
+    def _show_checkbutton_on_or_off(self) -> tuple[IntVar, ttk.Checkbutton]:
+
+        is_active = IntVar()
+
+        checkbutton_vpn_proxy = ttk.Checkbutton(variable=is_active, 
+                                                onvalue=1,
+                                                offvalue=0, 
+                                                takefocus=0)
+
+        checkbutton_vpn_proxy.grid(row=0, column=1, pady=10, sticky="we")
+
+        return (is_active, checkbutton_vpn_proxy)
+
+
+    def _show_label_on_or_off(self) -> ttk.Label:
+
+
+        label_on_or_off_proxy_server = ttk.Label(text="Откл.", 
+                        font=("Times New Roman", 14))
+
+        label_on_or_off_proxy_server.grid(row=0, column=2, pady=10, sticky="we")
+
+        return label_on_or_off_proxy_server
+
+
+    def _show_label_ip_adress_proxy_server(self) -> ttk.Label:
+
+
+        label_using_proxy_server = ttk.Label(text="IP-адрес прокси-сервера: ", 
+                        font=("Times New Roman", 14))
+
+        label_using_proxy_server.grid(row=2, column=0, pady=10, sticky="we")
+
+        return label_using_proxy_server
+
+
+    def _show_entry_ip(self) -> ttk.Entry:
+
+
+        entry_field_with_ip = ttk.Entry(width=20, 
+                                        font=("Times New Roman", 16))
+
+        validator = (entry_field_with_ip.register(validate_max_symbols_input), '%P')
+        entry_field_with_ip.config(validate='key', validatecommand=validator)
+        
+        entry_field_with_ip.grid(row=3, column=0, pady=10, sticky="we")
+
+        return entry_field_with_ip
+
+
+    def _show_button_save_all(self) -> ttk.Button:
+
+
+        btn_save_all = ttk.Button(text="Сохранить")
+
+        btn_save_all.grid(row = 4, column=0, pady=10, sticky="we")
+
+        return btn_save_all
+
+
