@@ -4,6 +4,8 @@ from tkinter import *
 from tkinter import ttk
 import customtkinter as ctk
 
+from .custom_switch import MyCustomSwitch
+
 from validators.entry_validator import validate_max_symbols_input
 
 from .control_elements import checkbutton_event
@@ -87,18 +89,19 @@ class DrawElements:
 
         is_active = BooleanVar()
 
-        ctk_switch = ctk.CTkSwitch(master=self._root,
-            variable=is_active,
-            command=lambda: checkbutton_event(ctk_switch, is_active, self.get_label_on_or_off(), self.get_entry_ip()),
-            text="",
-            font=("Arial", 12),
-            bg_color=self._root.cget("bg"),        # Цвет вокруг чекбокса (подстраиваем под фон окна)
-            fg_color="#000000",
-            progress_color="#00D5FF",
-            button_color=("#fafafa"),    # Цвет круглого бегунка,
-            width=50, 
-            height=25
-        )
+        # ctk_switch = ctk.CTkSwitch(master=self._root,
+        #     variable=is_active,
+        #     command=lambda: checkbutton_event(is_active, self.get_label_on_or_off(), self.get_entry_ip()),
+        #     text="",
+        #     font=("Arial", 12),
+        #     bg_color=self._root.cget("bg"),        # Цвет вокруг чекбокса (подстраиваем под фон окна)
+        #     fg_color="#000000",
+        #     progress_color="#00D5FF",
+        #     button_color=("#fafafa"),    # Цвет круглого бегунка,
+        #     width=50, 
+        #     height=25
+        # )
+        ctk_switch = MyCustomSwitch(self._root)
         ctk_switch.grid(row=0, column=1, pady=10, sticky="we")
 
 
