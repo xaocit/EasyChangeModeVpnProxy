@@ -5,10 +5,10 @@ from tkinter import ttk
 import customtkinter as ctk
 
 from .custom_switch import MyCustomSwitch
+from .control_elements import switch_event
 
 from validators.entry_validator import validate_max_symbols_input
 
-from .control_elements import checkbutton_event
 
 def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[int], is_resizable: tuple[bool]):
     """Функция создания окна"""
@@ -91,7 +91,7 @@ class DrawElements:
 
         # ctk_switch = ctk.CTkSwitch(master=self._root,
         #     variable=is_active,
-        #     command=lambda: checkbutton_event(is_active, self.get_label_on_or_off(), self.get_entry_ip()),
+        #     comand=lambda: switch_event(is_active, self.get_label_on_or_off(), self.get_entry_ip()),
         #     text="",
         #     font=("Arial", 12),
         #     bg_color=self._root.cget("bg"),        # Цвет вокруг чекбокса (подстраиваем под фон окна)
@@ -101,7 +101,13 @@ class DrawElements:
         #     width=50, 
         #     height=25
         # )
-        ctk_switch = MyCustomSwitch(self._root)
+        ctk_switch = MyCustomSwitch(self._root, 
+                                    comand=lambda state: [
+                                        is_active.set(state),
+                                        switch_event(is_active, self.get_label_on_or_off(), self.get_entry_ip())
+                                        ]
+                                    )
+
         ctk_switch.grid(row=0, column=1, pady=10, sticky="we")
 
 

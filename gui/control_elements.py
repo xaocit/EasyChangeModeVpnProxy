@@ -2,7 +2,7 @@
 
 from tkinter import *
 
-def checkbutton_event(is_active: BooleanVar, label_on_or_off: Label, entry_ip: Entry):
+def switch_event(is_active: BooleanVar, label_on_or_off: Label, entry_ip: Entry):
 
     if is_active.get():
         label_on_or_off.config(text="Вкл.")
