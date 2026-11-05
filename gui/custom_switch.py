@@ -6,20 +6,20 @@ from tkinter import ttk
 
 class MyCustomSwitch(Canvas):
 
-    def __init__(self, parent, width=48, height=22, variable=None, comand=None):
+    def __init__(self, parent, mode: bool, width=48, height=22, variable=None, comand=None):
         super().__init__(parent, width=width, height=height, bg=parent.cget("bg"), highlightthickness=0)
 
         self.width = width
         self.height = height
 
-        self._is_on = False
+        self._is_on = mode
         self.variable = variable
         self.comand = comand
 
         self.padding = 2
         self.x_right = self.width - self.height + self.padding
         self.x_left = self.padding
-        self.current_x = 0
+        self.current_x = 0 if (not self._is_on) else (self.x_right - self.padding)  # Определяем начальное положение кнопки в зависимости от состояния кнопки
 
         self.slider_color_off = "#fafafa"
         self.slider_color_on = "#000000"

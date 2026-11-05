@@ -5,7 +5,10 @@ from tkinter import ttk
 import customtkinter as ctk
 
 from .custom_switch import MyCustomSwitch
-from .control_elements import switch_event
+from .control_elements import (switch_event,
+                               button_save_event)
+
+from services.interaction import (get_proxy_settings)
 
 from validators.entry_validator import validate_max_symbols_input
 
@@ -51,6 +54,9 @@ class DrawElements:
 
         self._root = root
 
+        # Стартовое положение кнопки и значение ip
+        self._start_mode_of_button, self._start_ip_port = get_proxy_settings()
+
         label_using_proxy_server = self._show_label_using_proxy_server()
         self._is_active_ctk_switch, self._checkbutton_on_or_off = self._show_checkbutton_on_or_off()
         self._label_on_or_off = self._show_label_on_or_off()
@@ -85,23 +91,12 @@ class DrawElements:
         return label_using_proxy_server
 
 
-    def _show_checkbutton_on_or_off(self) -> tuple[IntVar, ctk.CTkSwitch]:
+    def _show_checkbutton_on_or_off(self) -> tuple[BooleanVar, ctk.CTkSwitch]:
 
         is_active = BooleanVar()
 
-        # ctk_switch = ctk.CTkSwitch(master=self._root,
-        #     variable=is_active,
-        #     comand=lambda: switch_event(is_active, self.get_label_on_or_off(), self.get_entry_ip()),
-        #     text="",
-        #     font=("Arial", 12),
-        #     bg_color=self._root.cget("bg"),        # Цвет вокруг чекбокса (подстраиваем под фон окна)
-        #     fg_color="#000000",
-        #     progress_color="#00D5FF",
-        #     button_color=("#fafafa"),    # Цвет круглого бегунка,
-        #     width=50, 
-        #     height=25
-        # )
         ctk_switch = MyCustomSwitch(self._root, 
+                                    mode=self._start_mode_of_button,
                                     comand=lambda state: [
                                         is_active.set(state),
                                         switch_event(is_active, self.get_label_on_or_off(), self.get_entry_ip())
@@ -117,7 +112,8 @@ class DrawElements:
     def _show_label_on_or_off(self) -> ttk.Label:
 
 
-        label_on_or_off_proxy_server = ttk.Label(text="Откл.", 
+        start_text = "Вкл." if self._start_mode_of_button else "Откл"
+        label_on_or_off_proxy_server = ttk.Label(text=start_text, 
                         font=("Times New Roman", 14))
 
         label_on_or_off_proxy_server.grid(row=0, column=2, pady=10, sticky="we")
@@ -141,9 +137,17 @@ class DrawElements:
 
         entry_field_with_ip = ttk.Entry(width=20, 
                                         font=("Times New Roman", 16))
+        entry_field_with_ip.insert(0, self._start_ip_port)
+
+        start_state = "normal" if self._start_mode_of_button else "readonly"
+        start_fg = "black" if self._start_mode_of_button else "gray"
 
         validator = (entry_field_with_ip.register(validate_max_symbols_input), '%P')
-        entry_field_with_ip.config(validate='key', validatecommand=validator)
+        entry_field_with_ip.config(state=start_state, foreground=start_fg, 
+                                    validate='key', validatecommand=validator)
+
+
+
         
         entry_field_with_ip.grid(row=3, column=0, pady=10, sticky="we")
 
@@ -153,7 +157,7 @@ class DrawElements:
     def _show_button_save_all(self) -> ttk.Button:
 
 
-        btn_save_all = ttk.Button(text="Сохранить")
+        btn_save_all = ttk.Button(text="Сохранить", command=lambda: button_save_event(self._entry_ip.get(), self._is_active_ctk_switch.get(), self._root.destroy))
 
         btn_save_all.grid(row = 4, column=0, pady=10, sticky="we")
 
