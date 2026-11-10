@@ -12,6 +12,41 @@
 
 ### Подготовка (настройка vpn и пр)
 
+#### Скачивание vpn
+Сначала установим vpn. Самый подходящий в России - это v2rayTun. Заходим в PlayMarket и скачиваем на телефон приложение, указанное на скриншоте:
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/1a3fdc9d-6300-4322-90ca-3bc27cd4412b" alt="" width="200">
+</p>
+
+#### Скачивание every-proxy
+Далее нам надо скачать приложение _every-proxy_, указанное на скришоте ниже, которое будет включать раздачу по vpn по wi-fi.
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/915f295d-0586-4946-bffd-d41850d3abda" alt="" width="200">
+</p>
+
+#### Необходимые настройки для работы vpn по wi-fi
+Перед началом работы необходимо в приложении v2rayTun произвести следующие настройки:
+1. Заходим в v2rayTun и открываем настройки.
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/698f1698-999c-46a1-b37b-9359e0ee31ae" alt="" width="200">
+</p>
+
+2. Ищем раздел 'настройка трафика' и открываем его.
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/1622a8eb-d2f9-4988-9289-fc831a7f2163" alt="" width="200">
+</p>
+
+3. Здесь зайти в настройку 'Обходить LAN через VPN' и поставить 'Обходить'.
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/e082d875-2147-4752-95b2-daa10ae62d33" alt="" width="200">
+</p>
+   
+4. Далее листаем ниже и находим кнопку 'Резрешать подключения из LAN', которую включаем.
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/91b1abdd-cf44-4815-be17-c50b6264f99a" alt="" width="200">
+</p>
+
+#### Как начать пользоваться vpn-proxy
 
 ### Установка приложения
 
