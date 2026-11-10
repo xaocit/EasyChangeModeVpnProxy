@@ -19,7 +19,7 @@
 </p>
 
 #### Скачивание every-proxy
-Далее нам надо скачать приложение _every-proxy_, указанное на скришоте ниже, которое будет включать раздачу по vpn по wi-fi.
+Далее нам надо скачать приложение _every proxy_, указанное на скриншоте ниже, которое будет включать раздачу по vpn по wi-fi.
 <p align="left">
   <img src="https://github.com/user-attachments/assets/915f295d-0586-4946-bffd-d41850d3abda" alt="" width="200">
 </p>
@@ -47,6 +47,15 @@
 </p>
 
 #### Как начать пользоваться vpn-proxy
+1. Заходим в скачанное _every proxy_ (выключаем интернет/wi-fi, точку доступа, и vpn, если он включён). Нам нужен IPv4-адрес, который указан в разделе IP-адреса на скриншоте. Например, как у меня ниже:
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/a8da5edb-cc82-471d-a7b0-c8f5484c2297" alt="" width="200">
+</p>
+
+2. Заходим в vpn и включаем его.
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/e7e31bf4-92d9-4886-aed7-205bd0fb60ff" alt="" width="200">
+</p>
 
 ### Установка приложения
 
