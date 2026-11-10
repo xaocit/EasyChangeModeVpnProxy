@@ -10,8 +10,6 @@ from .control_elements import (switch_event,
 
 from services.interaction import (get_proxy_settings)
 
-from validators.entry_validator import validate_max_symbols_input
-
 
 def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[int], is_resizable: tuple[bool]):
     """Функция создания окна"""
@@ -142,13 +140,8 @@ class DrawElements:
         start_state = "normal" if self._start_mode_of_button else "readonly"
         start_fg = "black" if self._start_mode_of_button else "gray"
 
-        validator = (entry_field_with_ip.register(validate_max_symbols_input), '%P')
-        entry_field_with_ip.config(state=start_state, foreground=start_fg, 
-                                    validate='key', validatecommand=validator)
+        entry_field_with_ip.config(state=start_state, foreground=start_fg)
 
-
-
-        
         entry_field_with_ip.grid(row=3, column=0, pady=10, sticky="we")
 
         return entry_field_with_ip
@@ -157,7 +150,8 @@ class DrawElements:
     def _show_button_save_all(self) -> ttk.Button:
 
 
-        btn_save_all = ttk.Button(text="Сохранить", command=lambda: button_save_event(self._entry_ip.get(), self._is_active_ctk_switch.get(), self._root.destroy))
+        btn_save_all = ttk.Button(text="Сохранить и выйти", command=lambda: button_save_event(self._entry_ip.get(), self._is_active_ctk_switch.get(), self._root.destroy))
+
 
         btn_save_all.grid(row = 4, column=0, pady=10, sticky="we")
 
