@@ -3,6 +3,11 @@
 import winreg  # Доступ к настройкам
 import ctypes  # Для применения изменений настроек реестра
 
+from my_exceptions.custom_exceptions import (ParameterNotFoundError,
+                                             ServerNotFoundError,
+                                             AccessRightError,
+                                             OtherRegisterError)
+
 def get_proxy_settings() -> tuple:
 
     registry_path = r"Software\Microsoft\Windows\CurrentVersion\Internet Settings"
@@ -16,8 +21,7 @@ def get_proxy_settings() -> tuple:
                 proxy_server, _ = winreg.QueryValueEx(key, "ProxyServer")
 
             except FileNotFoundError:
-                # Ошибка - не задан сервер
-                pass
+                raise ServerNotFoundError()
 
             # Преобразуем в привычный вид
             proxy_enable = bool(proxy_enable)
@@ -25,9 +29,14 @@ def get_proxy_settings() -> tuple:
 
             return (proxy_enable, proxy_server)
         
-    except Exception as e:
-        # Ошибка при обращении к реестру
-        pass
+    except FileNotFoundError as e:
+        raise ParameterNotFoundError() from e
+
+    except PermissionError as e:
+        raise AccessRightError() from e
+    
+    except winreg.error as e:
+        raise OtherRegisterError(e) from e
 
 
 def set_proxy_settings(ip_port: str, enabled: bool):
@@ -53,5 +62,11 @@ def set_proxy_settings(ip_port: str, enabled: bool):
         wininet.InternetSetOptionW(0, INTERNET_OPTION_SETTINGS_CHANGED, 0, 0)
         wininet.InternetSetOptionW(0, INTERNET_OPTION_REFRESH, 0, 0)
 
-    except Exception as e:
-        pass # Не удалось изменить настройки
+    except PermissionError as e:
+        raise AccessRightError("Нет прав на изменение настроек прокси в реестре.") from e
+    
+    except FileNotFoundError as e:
+        raise ParameterNotFoundError("Раздел настроек сети не найден в реестре.") from e
+    
+    except (OSError, TypeError, ValueError) as e:
+        raise OtherRegisterError(f"Системный сбой при сохранении настроек: {e}") from e

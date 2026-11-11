@@ -2,47 +2,61 @@
 
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import customtkinter as ctk
 
 from .custom_switch import MyCustomSwitch
 from .control_elements import (switch_event,
                                button_save_event)
 
+from validators.entry_validator import validate_max_symbols_input
+
 from services.interaction import (get_proxy_settings)
+
+from my_exceptions.custom_exceptions import ProxyRegistryError
 
 
 def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[int], is_resizable: tuple[bool]):
     """Функция создания окна"""
  
     root = Tk()  # создаем корневой объект - окно
+    root.withdraw() # Скрываем окно, чтобы оно вывелось затем уже прогруженным
 
-    root.title(title_of_window)  # устанавливаем заголовок окна
-    root.iconbitmap(default=path_of_icon)
-
-
-    # Задаем размер окна
-    window_width, window_height = window_size
-
-    # Получаем ширину и высоту экрана
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-
-    # Вычисляем координаты X и Y для центрирования
-    x = (screen_width - window_width) // 2
-    y = (screen_height - window_height) // 2
-
-    # Устанавливаем размер и положение окна
-    root.geometry(f'{window_width}x{window_height}+{x}+{y}')
+    try:
+        root.title(title_of_window)  # устанавливаем заголовок окна
+        root.iconbitmap(default=path_of_icon)
 
 
-    is_resizable_width, is_resizable_height = is_resizable
-    root.resizable(is_resizable_width, is_resizable_height)
+        # Задаем размер окна
+        window_width, window_height = window_size
+
+        # Получаем ширину и высоту экрана
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+
+        # Вычисляем координаты X и Y для центрирования
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+
+        # Устанавливаем размер и положение окна
+        root.geometry(f'{window_width}x{window_height}+{x}+{y}')
 
 
-    ## Действия по размещению элементов на странице
-    draw_elements = DrawElements(root)
+        is_resizable_width, is_resizable_height = is_resizable
+        root.resizable(is_resizable_width, is_resizable_height)
 
-    root.mainloop()
+
+        ## Действия по размещению элементов на странице
+        draw_elements = DrawElements(root)
+
+        # Показываем окно, если всё прошло успешно
+        root.deiconify()
+
+        root.mainloop()
+
+    except ProxyRegistryError as e:
+        messagebox.showerror(title="Критическая ошибка", message=str(e))
+        root.destroy()
 
 
 class DrawElements:
@@ -140,7 +154,8 @@ class DrawElements:
         start_state = "normal" if self._start_mode_of_button else "readonly"
         start_fg = "black" if self._start_mode_of_button else "gray"
 
-        entry_field_with_ip.config(state=start_state, foreground=start_fg)
+        validate_count_of_symbols = (self._root.register(validate_max_symbols_input), '%P')
+        entry_field_with_ip.config(state=start_state, foreground=start_fg, validatecommand=validate_count_of_symbols, validate='key')
 
         entry_field_with_ip.grid(row=3, column=0, pady=10, sticky="we")
 
@@ -150,7 +165,8 @@ class DrawElements:
     def _show_button_save_all(self) -> ttk.Button:
 
 
-        btn_save_all = ttk.Button(text="Сохранить и выйти", command=lambda: button_save_event(self._entry_ip.get(), self._is_active_ctk_switch.get(), self._root.destroy))
+        btn_save_all = ttk.Button(text="Сохранить и выйти", 
+                                  command=lambda: button_save_event(self._entry_ip.get(), self._is_active_ctk_switch.get(), self._root.destroy))
 
 
         btn_save_all.grid(row = 4, column=0, pady=10, sticky="we")
@@ -158,3 +174,7 @@ class DrawElements:
         return btn_save_all
 
 
+class DestroyApp:
+
+    def __init__(self, root: Tk):
+        root.destroy()

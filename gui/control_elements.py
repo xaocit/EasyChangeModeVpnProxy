@@ -5,7 +5,7 @@ from typing import Callable
 from tkinter import *
 from tkinter import messagebox
 
-from validators.entry_validator import validate_input
+from validators.entry_validator import validate_string_in_input
 
 from services.interaction import set_proxy_settings
 
@@ -22,8 +22,7 @@ def switch_event(is_active: BooleanVar, label_on_or_off: Label, entry_ip: Entry)
 
 def button_save_event(ip_port: str, enabled: bool, exit_app: Callable):
 
-
-    if validate_input(ip_port):
+    if validate_string_in_input(ip_port):
         set_proxy_settings(ip_port, enabled)
         exit_app()
 

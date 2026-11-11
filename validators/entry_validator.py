@@ -2,15 +2,6 @@
 
 import re
 
-def validate_input(ip: str) -> bool:
-
-    result = validate_max_symbols_input(ip) and validate_string_in_input(ip)
-
-    if result:
-        return True
-    
-    return False
-
 def validate_max_symbols_input(ip: str) -> bool:
     return len(ip) < 16
 
