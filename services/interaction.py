@@ -4,7 +4,6 @@ import winreg  # Доступ к настройкам
 import ctypes  # Для применения изменений настроек реестра
 
 from my_exceptions.custom_exceptions import (ParameterNotFoundError,
-                                             ServerNotFoundError,
                                              AccessRightError,
                                              OtherRegisterError)
 
@@ -21,16 +20,18 @@ def get_proxy_settings() -> tuple:
                 proxy_server, _ = winreg.QueryValueEx(key, "ProxyServer")
 
             except FileNotFoundError:
-                raise ServerNotFoundError()
+                proxy_server = ""
 
             # Преобразуем в привычный вид
             proxy_enable = bool(proxy_enable)
-            proxy_server = str(proxy_server)[:str(proxy_server).find(':')]
+
+            if proxy_server:
+                proxy_server = str(proxy_server)[:str(proxy_server).find(':')]
 
             return (proxy_enable, proxy_server)
         
     except FileNotFoundError as e:
-        raise ParameterNotFoundError() from e
+        pass
 
     except PermissionError as e:
         raise AccessRightError() from e
