@@ -7,7 +7,7 @@ from my_exceptions.custom_exceptions import (ParameterNotFoundError,
                                              AccessRightError,
                                              OtherRegisterError)
 
-def get_proxy_settings() -> tuple:
+def get_proxy_settings() -> tuple[bool, str]:
 
     registry_path = r"Software\Microsoft\Windows\CurrentVersion\Internet Settings"
 

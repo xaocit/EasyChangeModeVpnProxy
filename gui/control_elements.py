@@ -2,14 +2,14 @@
 
 from typing import Callable
 
-from tkinter import *
+import tkinter as tk
 from tkinter import messagebox
 
 from validators.entry_validator import validate_string_in_input
 
 from services.interaction import set_proxy_settings
 
-def switch_event(is_active: BooleanVar, label_on_or_off: Label, entry_ip: Entry):
+def switch_event(is_active: tk.BooleanVar, label_on_or_off: tk.Label, entry_ip: tk.Entry):
 
     if is_active.get():
         label_on_or_off.config(text="Вкл.")

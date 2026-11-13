@@ -1,6 +1,6 @@
 # Файл с главным окном программы
 
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import customtkinter as ctk
@@ -19,7 +19,7 @@ from my_exceptions.custom_exceptions import ProxyRegistryError
 def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[int], is_resizable: tuple[bool]):
     """Функция создания окна"""
  
-    root = Tk()  # создаем корневой объект - окно
+    root = tk.Tk()  # создаем корневой объект - окно
     root.withdraw() # Скрываем окно, чтобы оно вывелось затем уже прогруженным
 
     try:
@@ -47,7 +47,8 @@ def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[in
 
 
         ## Действия по размещению элементов на странице
-        draw_elements = DrawElements(root)
+        start_mode_of_btn, start_ip_port = get_proxy_settings()
+        draw_elements = DrawElements(root, start_mode_of_btn, start_ip_port)
 
         # Показываем окно, если всё прошло успешно
         root.deiconify()
@@ -62,12 +63,12 @@ def create_window(title_of_window: str, path_of_icon: str, window_size: tuple[in
 class DrawElements:
     """Класс, реализующий методы по отрисовке элементов на окне и дающий контроль над ними через переменные"""
 
-    def __init__(self, root: Tk):
+    def __init__(self, root: tk.Tk, start_mode_of_btn: bool, start_ip_port: str):
 
         self._root = root
 
         # Стартовое положение кнопки и значение ip
-        self._start_mode_of_button, self._start_ip_port = get_proxy_settings()
+        self._start_mode_of_button, self._start_ip_port = start_mode_of_btn, start_ip_port
 
         label_using_proxy_server = self._show_label_using_proxy_server()
         self._is_active_ctk_switch, self._checkbutton_on_or_off = self._show_checkbutton_on_or_off()
@@ -80,7 +81,7 @@ class DrawElements:
 
 
     def get_checkbutton(self):
-        return (self._is_active_checkbutton, self._checkbutton_on_or_off)
+        return (self._is_active_ctk_switch, self._checkbutton_on_or_off)
 
     def get_entry_ip(self):
         return self._entry_ip
@@ -103,9 +104,9 @@ class DrawElements:
         return label_using_proxy_server
 
 
-    def _show_checkbutton_on_or_off(self) -> tuple[BooleanVar, ctk.CTkSwitch]:
+    def _show_checkbutton_on_or_off(self) -> tuple[tk.BooleanVar, ctk.CTkSwitch]:
 
-        is_active = BooleanVar()
+        is_active = tk.BooleanVar()
 
         ctk_switch = MyCustomSwitch(self._root, 
                                     mode=self._start_mode_of_button,
@@ -172,9 +173,3 @@ class DrawElements:
         btn_save_all.grid(row = 4, column=0, pady=10, sticky="we")
 
         return btn_save_all
-
-
-class DestroyApp:
-
-    def __init__(self, root: Tk):
-        root.destroy()

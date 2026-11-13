@@ -1,10 +1,9 @@
 # Модуль с кастомным свитчом
 
-from tkinter import *
-from tkinter import ttk
+import tkinter as tk
 
 
-class MyCustomSwitch(Canvas):
+class MyCustomSwitch(tk.Canvas):
 
     def __init__(self, parent, mode: bool, width=48, height=22, variable=None, comand=None):
         super().__init__(parent, width=width, height=height, bg=parent.cget("bg"), highlightthickness=0)
