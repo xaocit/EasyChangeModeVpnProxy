@@ -40,7 +40,7 @@ class ProxyPresenter:
 
         is_enabled, ip = self._view.get_input_data()
 
-        if not validate_string_in_input(ip):
+        if is_enabled and (not validate_string_in_input(ip)):
             self._view.showerror("Ошибка! Введите корректный ip-адрес !!!")
             return
 
