@@ -3,7 +3,7 @@
 import winreg  # Доступ к настройкам
 import ctypes  # Для применения изменений настроек реестра
 
-from my_exceptions.custom_exceptions import (ParameterNotFoundError,
+from model.custom_exceptions import (ParameterNotFoundError,
                                              AccessRightError,
                                              OtherRegisterError)
 
@@ -40,7 +40,7 @@ def get_proxy_settings() -> tuple[bool, str]:
         raise OtherRegisterError(e) from e
 
 
-def set_proxy_settings(ip_port: str, enabled: bool):
+def set_proxy_settings(enabled: bool, ip_port: str):
 
     registry_path = r"Software\Microsoft\Windows\CurrentVersion\Internet Settings"
 

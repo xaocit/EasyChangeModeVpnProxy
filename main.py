@@ -6,10 +6,19 @@ from config_file.config_of_window import (title_of_window,
                                           is_resizable,
                                           )
 
-from gui.mainly_window import create_window
+from view.mainly_window import MainWindow
+from presenter.control_elements import ProxyPresenter
+
 
 def main():
-    create_window(title_of_window, path_of_icon, window_size, is_resizable)
+
+    view = MainWindow(title_of_window=title_of_window,
+                      path_of_icon=path_of_icon,
+                      window_size=window_size,
+                      is_resizable=is_resizable)
+
+    presenter = ProxyPresenter(view=view)
+    presenter.start()
 
 if __name__ == "__main__":
     main()
