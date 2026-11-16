@@ -21,7 +21,7 @@ class MainWindow:
         self._root.withdraw() # Скрываем окно, чтобы оно вывелось затем уже прогруженным
 
         self._root.title(title_of_window)  # устанавливаем заголовок окна
-        self._root.iconbitmap(default=path_of_icon)
+        self._root.iconbitmap(default=str(path_of_icon))
 
 
         # Задаем размер окна
