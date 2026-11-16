@@ -71,7 +71,7 @@ class MainWindow:
         label_using_proxy_server = ttk.Label(text="Использовать прокси-сервер: ", 
                         font=("Times New Roman", 14))
 
-        label_using_proxy_server.grid(row=0, column=0, pady=10 ,sticky="we")
+        label_using_proxy_server.place(relx=0.15, rely=0.2)
 
 
         ###### Свитч
@@ -85,7 +85,7 @@ class MainWindow:
                                         ]
                                     )
 
-        ctk_switch.grid(row=0, column=1, pady=10, sticky="we")
+        ctk_switch.place(relx=0.6, rely=0.2)
 
 
         ###### Надпись: Вкл. ИЛИ Откл.
@@ -93,14 +93,14 @@ class MainWindow:
         self._label_on_or_off_proxy_server = ttk.Label(text=start_text, 
                         font=("Times New Roman", 14))
 
-        self._label_on_or_off_proxy_server.grid(row=0, column=2, pady=10, sticky="we")
+        self._label_on_or_off_proxy_server.place(relx=0.7, rely=0.2)
 
 
         ###### Надпись: IP-адрес прокси-сервера:
         label_using_proxy_server = ttk.Label(text="IP-адрес прокси-сервера: ", 
                         font=("Times New Roman", 14))
 
-        label_using_proxy_server.grid(row=2, column=0, pady=10, sticky="we")
+        label_using_proxy_server.place(relx=0.15, rely=0.4)
 
 
         ###### Поле для ввода IP
@@ -114,14 +114,14 @@ class MainWindow:
         validate_count_of_symbols = (self._root.register(validate_max_symbols_input), '%P')
         self._field_with_ip.config(state=start_state, foreground=start_fg, validatecommand=validate_count_of_symbols, validate='key')
 
-        self._field_with_ip.grid(row=3, column=0, pady=10, sticky="we")
+        self._field_with_ip.place(relx=0.15, rely=0.5)
 
 
         ###### Кнопка: Сохранить и выйти
         btn_save_all = ttk.Button(text="Сохранить и выйти", 
                                   command=self._on_save)
 
-        btn_save_all.grid(row = 4, column=0, pady=10, sticky="we")
+        btn_save_all.place(relx=0.4, rely=0.8)
 
 
     def bind_events(self, on_save: Callable):
