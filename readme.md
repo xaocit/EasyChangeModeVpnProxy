@@ -75,25 +75,30 @@
 
 + #### _Структура проекта:_
   ```
-  \config_file    # Папка с конфигом окна
-      |--config_of_window.py
-      |--icon_app.ico
+  \builds
+      |--Proxy-Toggle.exe
 
-  \model          # model - взаимодействие преимущественно с внешними ресурсами
-      |--__init__.py
-      |--custom_exceptions.py
-      |--entry_validator.py
-      |--interaction.py
+  \source_code
+    \config_file    # Папка с конфигом окна
+        |--config_of_window.py
+        |--icon_app.ico
 
-  \presenter      # presenter - модуль, взаимодействующий с model и view
-      |--control_elements.py
+    \model          # model - взаимодействие преимущественно с внешними ресурсами
+        |--__init__.py
+        |--custom_exceptions.py
+        |--entry_validator.py
+        |--interaction.py
 
-  \view           # view - работа только с gui
-      |--__init__.py
-      |--custom_switch.py
-      |--mainly_window.py
+    \presenter      # presenter - модуль, взаимодействующий с model и view
+        |--control_elements.py
 
-  main.py
+    \view           # view - работа только с gui
+        |--__init__.py
+        |--custom_switch.py
+        |--mainly_window.py
+
+    main.py
+    
   readme.md
   ```
 + #### _Основные библиотеки:_
